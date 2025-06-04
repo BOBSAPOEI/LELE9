@@ -1,0 +1,70 @@
+class Kontak:
+    def __init__(self, nama, nomor_telepon, email):  # <-- diperbaiki dari _init_ menjadi __init__
+        # 1. atribut dijadikan private
+        self.__nama = nama
+        self.__nomor_telepon = nomor_telepon
+        self.__email = email
+
+    def tampilkan_info(self):
+        print(f"Nama: {self.__nama}")
+        print(f"Nomor Telepon: {self.__nomor_telepon}")
+        print(f"Email: {self.__email}")
+
+    # 2. method mengubah atribut nama, nomor_telepon, email
+    def set_nama(self, nama):
+        self.__nama = nama
+
+    def set_nomor_telepon(self, nomor_telepon):
+        self.__nomor_telepon = nomor_telepon
+
+    def set_email(self, email):
+        self.__email = email
+
+    # Getter (digunakan untuk pencarian di BukuKontak)
+    def get_nama(self):
+        return self.__nama
+
+
+class BukuKontak:
+    def __init__(self):  # <-- diperbaiki dari _init_ menjadi __init__
+        # 3. atribut dijadikan private
+        self.__daftar_kontak = []
+
+    def tambah_kontak(self, kontak):
+        self.__daftar_kontak.append(kontak)
+
+    # 4. method untuk menampilkan daftar kontak
+    def tampilkan_semua_kontak(self):
+        if not self.__daftar_kontak:
+            print("Tidak ada kontak dalam buku.")
+        else:
+            for kontak in self.__daftar_kontak:
+                kontak.tampilkan_info()
+                print("-" * 30)
+
+    def cari_kontak(self, nama):
+        for kontak in self.__daftar_kontak:
+            if kontak.get_nama() == nama:
+                return kontak
+        return None
+
+
+# Penggunaan Sistem
+buku_kontak = BukuKontak()
+
+kontak1 = Kontak("Adji", "081234567890", "Adji@gmail.com")
+kontak2 = Kontak("Mukti", "087654321098", "Mukti@gmail.com")
+
+buku_kontak.tambah_kontak(kontak1)
+buku_kontak.tambah_kontak(kontak2)
+
+print("== Daftar Kontak ==")
+buku_kontak.tampilkan_semua_kontak()
+
+# Cari kontak
+print("\n== Pencarian Kontak ==")
+kontak_cari = buku_kontak.cari_kontak("Joko")
+if kontak_cari:
+    kontak_cari.tampilkan_info()
+else:
+    print("Kontak tidak ditemukan.")
